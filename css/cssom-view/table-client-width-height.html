@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<title>CSSOM Test: Table's clientWidth/Height</title>
+<link rel="help" href="https://www.w3.org/TR/CSS2/tables.html#separated-borders" />
+<link rel="help" href="https://www.w3.org/TR/CSS2/tables.html#collapsing-borders" />
+<link rel="help" href="https://drafts.csswg.org/cssom-view/#extension-to-the-element-interface" />
+<script src=/resources/testharness.js></script>
+<script src=/resources/testharnessreport.js></script>
+<style>
+  table#non-border-collapsed {
+    border-collapse: separate;
+  }
+  table#border-collapsed {
+    border-collapse: collapse;
+  }
+  td {
+    border: 8px solid #faa;
+  }
+</style>
+<table id="non-border-collapsed">
+  <tbody>
+    <tr>
+      <td>a</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <td>c</td>
+      <td>d</td>
+    </tr>
+  </tbody>
+</table>
+<table id="border-collapsed">
+  <tbody>
+    <tr>
+      <td>e</td>
+      <td>f</td>
+    </tr>
+    <tr>
+      <td>g</td>
+      <td>h</td>
+    </tr>
+  </tbody>
+</table>
+<script type="text/javascript">
+  var nonBorderCollapsedTable = document.getElementById("non-border-collapsed");
+  var borderCollapsedTable = document.getElementById("border-collapsed");
+  test(function() {
+    assert_equals(nonBorderCollapsedTable.clientWidth,nonBorderCollapsedTable.offsetWidth);
+    assert_equals(nonBorderCollapsedTable.clientHeight,nonBorderCollapsedTable.offsetHeight);
+    assert_equals(borderCollapsedTable.clientWidth,borderCollapsedTable.offsetWidth);
+    assert_equals(borderCollapsedTable.clientHeight,borderCollapsedTable.offsetHeight);
+  }, "Table's clientWidth/Height and OffsetWidth/Height should be the same");
+</script>
